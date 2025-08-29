@@ -25,31 +25,23 @@
         }
         .input-group {
             display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            justify-content: space-between;
+            flex-direction: column;
+            margin-bottom: 20px;
+            align-items: flex-start;
         }
         .input-group label {
-            flex: 1;
-            font-weight: normal;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 1.1em;
         }
-        .input-group .input-detail-container {
-            flex: 1;
-            text-align: right;
-            padding: 0 10px;
-        }
-        .input-group .input-detail {
-            font-size: 0.9em;
-            color: #666;
-        }
-        .input-group .input-container {
-            flex: 1;
+        .input-group-content {
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
         }
         .input-group input[type="number"] {
-            width: 100%;
+            width: 50%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -58,6 +50,10 @@
             font-size: 1.2em;
             font-weight: bold;
             text-align: right;
+        }
+        .input-detail {
+            font-size: 0.9em;
+            color: #666;
         }
         .results {
             position: sticky;
@@ -127,26 +123,27 @@
             font-weight: normal;
             margin-right: 5px;
         }
-        
-        @media (max-width: 600px) {
+        /* Mobile-first approach: adjust for screens wider than 600px for desktop view */
+        @media (min-width: 601px) {
             .input-group {
-                flex-wrap: wrap;
-                flex-direction: column;
-                align-items: flex-start;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
             }
-            .input-group label, .input-group .input-detail-container, .input-group .input-container {
-                flex: none;
-                width: 100%;
-                text-align: left;
-                padding: 0;
+            .input-group label {
+                flex-basis: 30%;
+                margin-bottom: 0;
             }
-            .input-group .input-detail-container {
-                text-align: left;
-                margin-top: -10px;
-                margin-bottom: 5px;
+            .input-group-content {
+                flex-basis: 60%;
+                justify-content: flex-end;
             }
             .input-group input[type="number"] {
-                text-align: left;
+                width: auto;
+                min-width: 150px;
+            }
+            .input-group .input-detail {
+                margin-right: 20px;
             }
         }
     </style>
@@ -168,89 +165,76 @@
 
 <div class="container">
     <div class="header">
-        <h1>Kalkulator Harga TikTok</h1>
+        <h1>Kalkulator  TikTok</h1>
     </div>
 
     <div class="content">
         <div class="input-group">
             <label for="hpp">Harga Pokok / HPP (Rp)</label>
-            <div class="input-detail-container"></div>
-            <div class="input-container">
+            <div class="input-group-content">
                 <input type="number" id="hpp" value="40000" onfocus="this.select()">
             </div>
         </div>
 
         <div class="input-group">
             <label for="profit">Target Profit (%)</label>
-            <div class="input-detail-container">
+            <div class="input-group-content">
                 <span class="input-detail" id="profitDetail"></span>
-            </div>
-            <div class="input-container">
                 <input type="number" id="profit" value="10" onfocus="this.select()">
             </div>
         </div>
         
         <div class="input-group">
             <label for="operational">Biaya Operasional (%)</label>
-            <div class="input-detail-container">
+            <div class="input-group-content">
                 <span class="input-detail" id="operationalDetail"></span>
-            </div>
-            <div class="input-container">
                 <input type="number" id="operational" value="2" onfocus="this.select()">
             </div>
         </div>
         
         <div class="input-group">
             <label for="admin">Biaya Admin (%)</label>
-            <div class="input-detail-container">
+            <div class="input-group-content">
                 <span class="input-detail" id="adminDetail"></span>
-            </div>
-            <div class="input-container">
                 <input type="number" id="admin" value="17" onfocus="this.select()">
             </div>
         </div>
 
         <div class="input-group">
             <label for="flat">Biaya Flat (Rp)</label>
-            <div class="input-detail-container"></div>
-            <div class="input-container">
+            <div class="input-group-content">
                 <input type="number" id="flat" value="1250" onfocus="this.select()">
             </div>
         </div>
 
         <div class="input-group">
             <label for="affiliate">Komisi Affiliate (%)</label>
-            <div class="input-detail-container">
+            <div class="input-group-content">
                 <span class="input-detail" id="affiliateDetail"></span>
-            </div>
-            <div class="input-container">
                 <input type="number" id="affiliate" value="10" onfocus="this.select()">
             </div>
         </div>
 
         <div class="input-group">
             <label for="ads">Iklan (%)</label>
-            <div class="input-detail-container">
+            <div class="input-group-content">
                 <span class="input-detail" id="adsDetail"></span>
-            </div>
-            <div class="input-container">
                 <input type="number" id="ads" value="10" onfocus="this.select()">
             </div>
         </div>
 
         <hr>
 
-        <h2>Cek Harga Kompetitor</h2>
+        <h2>Cek Profit Kompetitor</h2>
         <div class="input-group">
             <label for="customHarga">Harga Jual (Rp)</label>
-            <div class="input-detail-container"></div>
-            <div class="input-container">
+            <div class="input-group-content">
                 <input type="number" id="customHarga" placeholder="Masukkan harga jual..." onfocus="this.select()">
             </div>
         </div>
 
         <div class="results-static">
-            <h2>Profit</h2>
+            <h2></h2>
             <p class="profit-kompetitor-display profit-info">
                 <span class="label">Profit:</span>
                 <span id="profitKompetitorInfo">Rp 0 (0%)</span>
@@ -323,18 +307,18 @@
 
         const hargaJual = (hpp + flat) / denominator;
         const pembulatan = Math.ceil(hargaJual / 1000) * 1000;
-        const minimalMarkup = ((hargaJual / hpp) - 1) * 100;
+        const minimalMarkup = ((pembulatan / hpp) - 1) * 100;
         const calculatedTargetProfitRp = hargaJual * targetProfitPercentage;
 
-        hargaJualDisplay.textContent = formatRupiah(hargaJual);
+        hargaJualDisplay.textContent = formatRupiah(pembulatan);
         minimalMarkupDisplay.textContent = `${Math.round(minimalMarkup)}%`;
         targetProfitInfoDisplay.textContent = `${formatRupiah(calculatedTargetProfitRp)} (${Math.round(targetProfitPercentage * 100)}%)`;
 
-        profitDetail.textContent = formatRupiah(hargaJual * targetProfitPercentage);
-        operationalDetail.textContent = formatRupiah(hargaJual * operationalPercentage);
-        adminDetail.textContent = formatRupiah(hargaJual * adminPercentage);
-        affiliateDetail.textContent = formatRupiah(hargaJual * affiliatePercentage);
-        adsDetail.textContent = formatRupiah(hargaJual * adsPercentage);
+        profitDetail.textContent = formatRupiah(pembulatan * targetProfitPercentage);
+        operationalDetail.textContent = formatRupiah(pembulatan * operationalPercentage);
+        adminDetail.textContent = formatRupiah(pembulatan * adminPercentage);
+        affiliateDetail.textContent = formatRupiah(pembulatan * affiliatePercentage);
+        adsDetail.textContent = formatRupiah(pembulatan * adsPercentage);
 
         if (document.activeElement !== customHargaInput) {
             customHargaInput.value = pembulatan;
