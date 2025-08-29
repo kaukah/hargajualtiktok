@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Harga Jual TikTok</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #1a1a1a;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: normal; /* Tidak bold */
+        }
+        .input-group input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-size: 1.2em; /* Ukuran font lebih besar */
+            font-weight: bold; /* Tebal */
+        }
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .results h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        .price-display {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+        .rounded-price, .markup, .profit-info {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .profit-info.negative {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .warning {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Kalkulator Harga Jual TikTok</h1>
+
+    <div class="input-group">
+        <label for="hpp">HPP (Harga Pokok Penjualan) (Rp)</label>
+        <input type="number" id="hpp" value="40000" onfocus="this.select()">
+    </div>
+
+    <div class="input-group">
+        <label for="profit">Target Profit (%)</label>
+        <input type="number" id="profit" value="10" onfocus="this.select()">
+    </div>
+    
+    <div class="input-group">
+        <label for="operational">Biaya Operasional (%)</label>
+        <input type="number" id="operational" value="2" onfocus="this.select()">
+    </div>
+    
+    <div class="input-group">
+        <label for="admin">Biaya Admin (%)</label>
+        <input type="number" id="admin" value="17" onfocus="this.select()">
+    </div>
+
+    <div class="input-group">
+        <label for="flat">Biaya Flat (Rp)</label>
+        <input type="number" id="flat" value="1250" onfocus="this.select()">
+    </div>
+
+    <div class="input-group">
+        <label for="affiliate">Komisi Affiliate (%)</label>
+        <input type="number" id="affiliate" value="10" onfocus="this.select()">
+    </div>
+
+    <div class="input-group">
+        <label for="ads">Iklan (%)</label>
+        <input type="number" id="ads" value="10" onfocus="this.select()">
+    </div>
+
+    <hr>
+
+    <div class="results">
+        <h2>Harga Jual</h2>
+        <div class="price-display" id="hargaJualDisplay">Rp 0</div>
+        
+        <p class="rounded-price">Pembulatan Harga Jual: <span id="pembulatanHargaJual">Rp 0</span></p>
+        <p class="markup">Minimal Markup: <span id="minimalMarkup">0%</span></p>
+        <p class="profit-info">Profit: <span id="targetProfitInfo">Rp 0 (0%)</span></p>
+    </div>
+
+    <hr>
+
+    <h2>Cek Profit dengan Harga Kompetitor</h2>
+    <div class="input-group">
+        <label for="customHarga">Harga Jual Kompetitor (Rp)</label>
+        <input type="number" id="customHarga" placeholder="Masukkan harga jual..." onfocus="this.select()">
+    </div>
+
+    <div class="results">
+        <h2>Informasi Profit</h2>
+        <p class="profit-info">Profit: <span id="profitKompetitorInfo">Rp 0 (0%)</span></p>
+    </div>
+
+</div>
+
+<div class="footer">
+    Created by Endro Kaukah 2025
+</div>
+
+<script>
+    const hppInput = document.getElementById('hpp');
+    const profitInput = document.getElementById('profit');
+    const operationalInput = document.getElementById('operational');
+    const adminInput = document.getElementById('admin');
+    const flatInput = document.getElementById('flat');
+    const affiliateInput = document.getElementById('affiliate');
+    const adsInput = document.getElementById('ads');
+    const hargaJualDisplay = document.getElementById('hargaJualDisplay');
+    const pembulatanHargaJualDisplay = document.getElementById('pembulatanHargaJual');
+    const minimalMarkupDisplay = document.getElementById('minimalMarkup');
+    const targetProfitInfoDisplay = document.getElementById('targetProfitInfo');
+    const customHargaInput = document.getElementById('customHarga');
+    const profitKompetitorInfoDisplay = document.getElementById('profitKompetitorInfo');
+
+    function formatRupiah(number) {
+        if (isNaN(number) || number === null) {
+            return '⚠️ Belum Lengkap';
+        }
+        return 'Rp ' + Math.round(number).toLocaleString('id-ID');
+    }
+
+    function calculateSellingPrice() {
+        const hpp = parseFloat(hppInput.value);
+        const targetProfitPercentage = parseFloat(profitInput.value) / 100;
+        const operationalPercentage = parseFloat(operationalInput.value) / 100;
+        const adminPercentage = parseFloat(adminInput.value) / 100;
+        const flat = parseFloat(flatInput.value);
+        const affiliatePercentage = parseFloat(affiliateInput.value) / 100;
+        const adsPercentage = parseFloat(adsInput.value) / 100;
+
+        const totalCostPercentage = operationalPercentage + adminPercentage + affiliatePercentage + adsPercentage + targetProfitPercentage;
+        
+        if (isNaN(hpp) || isNaN(flat) || isNaN(totalCostPercentage)) {
+            const warningText = '⚠️ Belum Lengkap';
+            hargaJualDisplay.textContent = warningText;
+            pembulatanHargaJualDisplay.textContent = warningText;
+            minimalMarkupDisplay.textContent = warningText;
+            targetProfitInfoDisplay.textContent = warningText;
+            profitKompetitorInfoDisplay.textContent = warningText;
+            return;
+        }
+
+        const denominator = 1 - totalCostPercentage;
+        if (denominator <= 0) {
+            const warningText = '⚠️ Total biaya >= 100%';
+            hargaJualDisplay.textContent = warningText;
+            pembulatanHargaJualDisplay.textContent = warningText;
+            minimalMarkupDisplay.textContent = warningText;
+            targetProfitInfoDisplay.textContent = warningText;
+            profitKompetitorInfoDisplay.textContent = warningText;
+            return;
+        }
+
+        const hargaJual = (hpp + flat) / denominator;
+        const pembulatan = Math.ceil(hargaJual / 1000) * 1000;
+        const minimalMarkup = ((hargaJual / hpp) - 1) * 100;
+        const calculatedTargetProfitRp = hargaJual * targetProfitPercentage;
+
+        hargaJualDisplay.textContent = formatRupiah(hargaJual);
+        pembulatanHargaJualDisplay.textContent = formatRupiah(pembulatan);
+        minimalMarkupDisplay.textContent = `${Math.round(minimalMarkup)}%`;
+        targetProfitInfoDisplay.textContent = `${formatRupiah(calculatedTargetProfitRp)} (${Math.round(targetProfitPercentage * 100)}%)`;
+
+        customHargaInput.value = Math.round(hargaJual);
+        checkCustomPrice();
+    }
+
+    function checkCustomPrice() {
+        const hpp = parseFloat(hppInput.value);
+        const customHarga = parseFloat(customHargaInput.value);
+        const operationalPercentage = parseFloat(operationalInput.value) / 100;
+        const adminPercentage = parseFloat(adminInput.value) / 100;
+        const flat = parseFloat(flatInput.value);
+        const affiliatePercentage = parseFloat(affiliateInput.value) / 100;
+        const adsPercentage = parseFloat(adsInput.value) / 100;
+
+        if (isNaN(customHarga) || isNaN(hpp) || isNaN(operationalPercentage) || isNaN(adminPercentage) || isNaN(flat) || isNaN(affiliatePercentage) || isNaN(adsPercentage)) {
+            profitKompetitorInfoDisplay.textContent = '⚠️ Belum Lengkap';
+            return;
+        }
+
+        const operationalCost = customHarga * operationalPercentage;
+        const adminCost = customHarga * adminPercentage;
+        const affiliateCost = customHarga * affiliatePercentage;
+        const adsCost = customHarga * adsPercentage;
+
+        const profitRp = customHarga - hpp - operationalCost - adminCost - flat - affiliateCost - adsCost;
+        const profitPersen = (profitRp / customHarga) * 100;
+
+        profitKompetitorInfoDisplay.textContent = `${formatRupiah(profitRp)} (${Math.round(profitPersen)}%)`;
+
+        const profitKompetitorContainer = profitKompetitorInfoDisplay.parentElement;
+        if (profitRp < 0) {
+            profitKompetitorContainer.classList.add('negative');
+        } else {
+            profitKompetitorContainer.classList.remove('negative');
+        }
+    }
+
+    const inputs = document.querySelectorAll('input[type="number"]');
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            calculateSellingPrice();
+            checkCustomPrice();
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        calculateSellingPrice();
+    });
+</script>
+
+</body>
+</html>
