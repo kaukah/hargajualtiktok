@@ -7,60 +7,79 @@
     <style>
         body {
             font-family: sans-serif;
-            margin: 20px;
+            margin: 0;
             background-color: #f4f4f4;
             color: #333;
         }
         .container {
-            max-width: 600px;
-            margin: 0 auto;
+            padding: 20px;
             background: #fff;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding-top: 20px;
         }
         h1, h2 {
             text-align: center;
             color: #1a1a1a;
         }
         .input-group {
+            display: flex;
+            align-items: center;
             margin-bottom: 15px;
         }
         .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: normal; /* Tidak bold */
+            flex-basis: 50%;
+            margin-right: 10px;
+            font-weight: normal;
         }
         .input-group input[type="number"] {
-            width: 100%;
+            flex-basis: 50%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             cursor: pointer;
-            font-size: 1.2em; /* Ukuran font lebih besar */
-            font-weight: bold; /* Tebal */
+            font-size: 1.2em;
+            font-weight: bold;
         }
         .results {
-            margin-top: 30px;
-            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             background-color: #e9ecef;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .results h2 {
-            margin-top: 0;
-            color: #007bff;
+        .results-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
         }
         .price-display {
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: bold;
             color: #28a745;
-            margin: 10px 0;
         }
-        .rounded-price, .markup, .profit-info {
-            font-size: 1.2em;
+        .price-display-label {
+            display: block;
+            font-size: 0.7em;
+            color: #555;
+            font-weight: normal;
+        }
+        .single-line-results {
             margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .single-line-results p {
+            margin: 5px;
+            font-size: 0.8em;
         }
         .profit-info.negative {
             color: #dc3545;
@@ -70,78 +89,102 @@
             color: #ffc107;
             font-weight: bold;
         }
+        .content {
+            padding: 20px;
+        }
         .footer {
             text-align: center;
-            margin-top: 20px;
+            padding: 20px;
             color: #777;
             font-size: 0.9em;
+        }
+        /* New style for single-line profit display */
+        .profit-kompetitor-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .profit-kompetitor-display .label {
+            font-weight: normal;
+            margin-right: 5px;
         }
     </style>
 </head>
 <body>
 
+<div class="results">
+    <div class="results-info">
+        <div>
+            <span class="price-display-label">Harga Jual:</span>
+            <span class="price-display" id="hargaJualDisplay">Rp 0</span>
+        </div>
+    </div>
+    <div class="single-line-results">
+        <p>Pembulatan: <span id="pembulatanHargaJual">Rp 0</span></p>
+        <p>Markup HPP: <span id="minimalMarkup">0%</span></p>
+        <p>Profit: <span id="targetProfitInfo">Rp 0 (0%)</span></p>
+    </div>
+</div>
+
 <div class="container">
-    <h1>Kalkulator Harga TikTok</h1>
-
-    <div class="input-group">
-        <label for="hpp">Harga Pokok / HPP (Rp)</label>
-        <input type="number" id="hpp" value="40000" onfocus="this.select()">
+    <div class="header">
+        <h1>Kalkulator TikTok</h1>
     </div>
 
-    <div class="input-group">
-        <label for="profit">Target Profit (%)</label>
-        <input type="number" id="profit" value="10" onfocus="this.select()">
-    </div>
-    
-    <div class="input-group">
-        <label for="operational">Biaya Operasional (%)</label>
-        <input type="number" id="operational" value="2" onfocus="this.select()">
-    </div>
-    
-    <div class="input-group">
-        <label for="admin">Biaya Admin (%)</label>
-        <input type="number" id="admin" value="17" onfocus="this.select()">
-    </div>
+    <div class="content">
+        <div class="input-group">
+            <label for="hpp">Harga Pokok / HPP (Rp)</label>
+            <input type="number" id="hpp" value="40000" onfocus="this.select()">
+        </div>
 
-    <div class="input-group">
-        <label for="flat">Biaya Flat (Rp)</label>
-        <input type="number" id="flat" value="1250" onfocus="this.select()">
-    </div>
-
-    <div class="input-group">
-        <label for="affiliate">Komisi Affiliate (%)</label>
-        <input type="number" id="affiliate" value="10" onfocus="this.select()">
-    </div>
-
-    <div class="input-group">
-        <label for="ads">Iklan (%)</label>
-        <input type="number" id="ads" value="10" onfocus="this.select()">
-    </div>
-
-    <hr>
-
-    <div class="results">
-        <h2>Harga Jual :</h2>
-        <div class="price-display" id="hargaJualDisplay">Rp 0</div>
+        <div class="input-group">
+            <label for="profit">Target Profit (%)</label>
+            <input type="number" id="profit" value="10" onfocus="this.select()">
+        </div>
         
-        <p class="rounded-price">Pembulatan: <span id="pembulatanHargaJual">Rp 0</span></p>
-        <p class="markup">Markup HPP: <span id="minimalMarkup">0%</span></p>
-        <p class="profit-info">Profit: <span id="targetProfitInfo">Rp 0 (0%)</span></p>
+        <div class="input-group">
+            <label for="operational">Biaya Operasional (%)</label>
+            <input type="number" id="operational" value="2" onfocus="this.select()">
+        </div>
+        
+        <div class="input-group">
+            <label for="admin">Biaya Admin (%)</label>
+            <input type="number" id="admin" value="17" onfocus="this.select()">
+        </div>
+
+        <div class="input-group">
+            <label for="flat">Biaya Flat (Rp)</label>
+            <input type="number" id="flat" value="1250" onfocus="this.select()">
+        </div>
+
+        <div class="input-group">
+            <label for="affiliate">Komisi Affiliate (%)</label>
+            <input type="number" id="affiliate" value="10" onfocus="this.select()">
+        </div>
+
+        <div class="input-group">
+            <label for="ads">Iklan (%)</label>
+            <input type="number" id="ads" value="10" onfocus="this.select()">
+        </div>
+
+        <hr>
+
+        <h2>Cek Harga Kompetitor</h2>
+        <div class="input-group">
+            <label for="customHarga">Harga Jual (Rp)</label>
+            <input type="number" id="customHarga" placeholder="Masukkan harga jual..." onfocus="this.select()">
+        </div>
+
+        <div class="results-static">
+            <h2></h2>
+            <p class="profit-kompetitor-display profit-info">
+                <span class="label">Profit:</span>
+                <span id="profitKompetitorInfo"> Rp 0 (0%)</span>
+            </p>
+        </div>
     </div>
-
-    <hr>
-
-    <h2>Cek Harga Kompetitor</h2>
-    <div class="input-group">
-        <label for="customHarga">Harga Jual (Rp)</label>
-        <input type="number" id="customHarga" placeholder="Masukkan harga jual..." onfocus="this.select()">
-    </div>
-
-    <div class="results">
-        <h2>Profit</h2>
-        <p class="profit-info"><span id="profitKompetitorInfo">Rp 0 (0%)</span></p>
-    </div>
-
 </div>
 
 <div class="footer">
@@ -216,7 +259,6 @@
             customHargaInput.value = pembulatan;
         }
 
-        // Memastikan profit kompetitor diupdate berdasarkan nilai saat ini
         checkCustomPrice();
     }
 
