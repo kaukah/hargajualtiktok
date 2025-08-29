@@ -27,15 +27,29 @@
             display: flex;
             align-items: center;
             margin-bottom: 15px;
-            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-content: space-between;
         }
         .input-group label {
-            flex-basis: 70%; /* Label takes more width */
-            margin-right: 10px;
+            flex: 1;
             font-weight: normal;
         }
+        .input-group .input-detail-container {
+            flex: 1;
+            text-align: right;
+            padding: 0 10px;
+        }
+        .input-group .input-detail {
+            font-size: 0.9em;
+            color: #666;
+        }
+        .input-group .input-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
         .input-group input[type="number"] {
-            flex-basis: 25%; /* Input takes less width */
+            width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -43,7 +57,7 @@
             cursor: pointer;
             font-size: 1.2em;
             font-weight: bold;
-            text-align: right; /* Align text to the right for numbers */
+            text-align: right;
         }
         .results {
             position: sticky;
@@ -75,15 +89,15 @@
         .single-line-results {
             margin: 10px 0;
             display: flex;
-            justify-content: center; /* Center items for better mobile display */
+            justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px; /* Add some space between items */
+            gap: 15px;
         }
         .single-line-results p {
-            margin: 0; /* Remove default paragraph margin */
+            margin: 0;
             font-size: 1em;
-            white-space: nowrap; /* Prevent wrapping for compact display */
+            white-space: nowrap;
         }
         .profit-info.negative {
             color: #dc3545;
@@ -102,7 +116,6 @@
             color: #777;
             font-size: 0.9em;
         }
-        /* New style for single-line profit display */
         .profit-kompetitor-display {
             display: flex;
             justify-content: center;
@@ -114,27 +127,26 @@
             font-weight: normal;
             margin-right: 5px;
         }
-
-        /* Responsive adjustments for smaller screens */
+        
         @media (max-width: 600px) {
-            .input-group label, .input-group input[type="number"] {
-                flex-basis: 100%; /* Stack label and input on very small screens */
-                margin-right: 0;
+            .input-group {
+                flex-wrap: wrap;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .input-group label, .input-group .input-detail-container, .input-group .input-container {
+                flex: none;
+                width: 100%;
+                text-align: left;
+                padding: 0;
+            }
+            .input-group .input-detail-container {
+                text-align: left;
+                margin-top: -10px;
+                margin-bottom: 5px;
             }
             .input-group input[type="number"] {
-                margin-top: 5px; /* Add some space between stacked label and input */
-                text-align: left; /* Align left when stacked */
-            }
-            .single-line-results {
-                flex-direction: column; /* Stack results vertically on small screens */
-                align-items: center;
-                gap: 5px;
-            }
-            .results .price-display {
-                font-size: 1.8em; /* Slightly smaller font for sticky header on mobile */
-            }
-            .results-info {
-                margin-bottom: 5px;
+                text-align: left;
             }
         }
     </style>
@@ -156,43 +168,74 @@
 
 <div class="container">
     <div class="header">
-        <h1>Kalkulator TikTok</h1>
+        <h1>Kalkulator Harga TikTok</h1>
     </div>
 
     <div class="content">
         <div class="input-group">
             <label for="hpp">Harga Pokok / HPP (Rp)</label>
-            <input type="number" id="hpp" value="40000" onfocus="this.select()">
+            <div class="input-detail-container"></div>
+            <div class="input-container">
+                <input type="number" id="hpp" value="40000" onfocus="this.select()">
+            </div>
         </div>
 
         <div class="input-group">
             <label for="profit">Target Profit (%)</label>
-            <input type="number" id="profit" value="10" onfocus="this.select()">
+            <div class="input-detail-container">
+                <span class="input-detail" id="profitDetail"></span>
+            </div>
+            <div class="input-container">
+                <input type="number" id="profit" value="10" onfocus="this.select()">
+            </div>
         </div>
         
         <div class="input-group">
             <label for="operational">Biaya Operasional (%)</label>
-            <input type="number" id="operational" value="2" onfocus="this.select()">
+            <div class="input-detail-container">
+                <span class="input-detail" id="operationalDetail"></span>
+            </div>
+            <div class="input-container">
+                <input type="number" id="operational" value="2" onfocus="this.select()">
+            </div>
         </div>
         
         <div class="input-group">
             <label for="admin">Biaya Admin (%)</label>
-            <input type="number" id="admin" value="17" onfocus="this.select()">
+            <div class="input-detail-container">
+                <span class="input-detail" id="adminDetail"></span>
+            </div>
+            <div class="input-container">
+                <input type="number" id="admin" value="17" onfocus="this.select()">
+            </div>
         </div>
 
         <div class="input-group">
             <label for="flat">Biaya Flat (Rp)</label>
-            <input type="number" id="flat" value="1250" onfocus="this.select()">
+            <div class="input-detail-container"></div>
+            <div class="input-container">
+                <input type="number" id="flat" value="1250" onfocus="this.select()">
+            </div>
         </div>
 
         <div class="input-group">
             <label for="affiliate">Komisi Affiliate (%)</label>
-            <input type="number" id="affiliate" value="10" onfocus="this.select()">
+            <div class="input-detail-container">
+                <span class="input-detail" id="affiliateDetail"></span>
+            </div>
+            <div class="input-container">
+                <input type="number" id="affiliate" value="10" onfocus="this.select()">
+            </div>
         </div>
 
         <div class="input-group">
             <label for="ads">Iklan (%)</label>
-            <input type="number" id="ads" value="10" onfocus="this.select()">
+            <div class="input-detail-container">
+                <span class="input-detail" id="adsDetail"></span>
+            </div>
+            <div class="input-container">
+                <input type="number" id="ads" value="10" onfocus="this.select()">
+            </div>
         </div>
 
         <hr>
@@ -200,11 +243,14 @@
         <h2>Cek Harga Kompetitor</h2>
         <div class="input-group">
             <label for="customHarga">Harga Jual (Rp)</label>
-            <input type="number" id="customHarga" placeholder="Masukkan harga jual..." onfocus="this.select()">
+            <div class="input-detail-container"></div>
+            <div class="input-container">
+                <input type="number" id="customHarga" placeholder="Masukkan harga jual..." onfocus="this.select()">
+            </div>
         </div>
 
         <div class="results-static">
-            <h2></h2>
+            <h2>Profit</h2>
             <p class="profit-kompetitor-display profit-info">
                 <span class="label">Profit:</span>
                 <span id="profitKompetitorInfo">Rp 0 (0%)</span>
@@ -225,12 +271,19 @@
     const flatInput = document.getElementById('flat');
     const affiliateInput = document.getElementById('affiliate');
     const adsInput = document.getElementById('ads');
+
     const hargaJualDisplay = document.getElementById('hargaJualDisplay');
-    /* const pembulatanHargaJualDisplay = document.getElementById('pembulatanHargaJual'); */ // Removed
     const minimalMarkupDisplay = document.getElementById('minimalMarkup');
     const targetProfitInfoDisplay = document.getElementById('targetProfitInfo');
+
     const customHargaInput = document.getElementById('customHarga');
     const profitKompetitorInfoDisplay = document.getElementById('profitKompetitorInfo');
+
+    const profitDetail = document.getElementById('profitDetail');
+    const operationalDetail = document.getElementById('operationalDetail');
+    const adminDetail = document.getElementById('adminDetail');
+    const affiliateDetail = document.getElementById('affiliateDetail');
+    const adsDetail = document.getElementById('adsDetail');
 
     function formatRupiah(number) {
         if (isNaN(number) || number === null) {
@@ -254,7 +307,6 @@
         if (isNaN(hpp) || isNaN(flat) || isNaN(totalCostPercentage)) {
             const warningText = '⚠️ Belum Lengkap';
             hargaJualDisplay.textContent = warningText;
-            /* pembulatanHargaJualDisplay.textContent = warningText; */ // Removed
             minimalMarkupDisplay.textContent = warningText;
             targetProfitInfoDisplay.textContent = warningText;
             return;
@@ -264,7 +316,6 @@
         if (denominator <= 0) {
             const warningText = '⚠️ Total biaya >= 100%';
             hargaJualDisplay.textContent = warningText;
-            /* pembulatanHargaJualDisplay.textContent = warningText; */ // Removed
             minimalMarkupDisplay.textContent = warningText;
             targetProfitInfoDisplay.textContent = warningText;
             return;
@@ -276,11 +327,15 @@
         const calculatedTargetProfitRp = hargaJual * targetProfitPercentage;
 
         hargaJualDisplay.textContent = formatRupiah(hargaJual);
-        /* pembulatanHargaJualDisplay.textContent = formatRupiah(pembulatan); */ // Removed
         minimalMarkupDisplay.textContent = `${Math.round(minimalMarkup)}%`;
         targetProfitInfoDisplay.textContent = `${formatRupiah(calculatedTargetProfitRp)} (${Math.round(targetProfitPercentage * 100)}%)`;
 
-        // Memastikan harga kompetitor otomatis terisi hanya jika belum ada input manual
+        profitDetail.textContent = formatRupiah(hargaJual * targetProfitPercentage);
+        operationalDetail.textContent = formatRupiah(hargaJual * operationalPercentage);
+        adminDetail.textContent = formatRupiah(hargaJual * adminPercentage);
+        affiliateDetail.textContent = formatRupiah(hargaJual * affiliatePercentage);
+        adsDetail.textContent = formatRupiah(hargaJual * adsPercentage);
+
         if (document.activeElement !== customHargaInput) {
             customHargaInput.value = pembulatan;
         }
@@ -320,14 +375,13 @@
         }
     }
 
-    const inputs = document.querySelectorAll('#hpp, #profit, #operational, #admin, #flat, #affiliate, #ads');
+    const inputs = document.querySelectorAll('input[type="number"]');
     inputs.forEach(input => {
         input.addEventListener('input', () => {
             calculateSellingPrice();
+            checkCustomPrice();
         });
     });
-
-    customHargaInput.addEventListener('input', checkCustomPrice);
 
     document.addEventListener('DOMContentLoaded', () => {
         calculateSellingPrice();
