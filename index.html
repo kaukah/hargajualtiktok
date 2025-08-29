@@ -27,14 +27,15 @@
             display: flex;
             align-items: center;
             margin-bottom: 15px;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
         }
         .input-group label {
-            flex-basis: 50%;
+            flex-basis: 70%; /* Label takes more width */
             margin-right: 10px;
             font-weight: normal;
         }
         .input-group input[type="number"] {
-            flex-basis: 50%;
+            flex-basis: 25%; /* Input takes less width */
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -42,6 +43,7 @@
             cursor: pointer;
             font-size: 1.2em;
             font-weight: bold;
+            text-align: right; /* Align text to the right for numbers */
         }
         .results {
             position: sticky;
@@ -73,13 +75,15 @@
         .single-line-results {
             margin: 10px 0;
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* Center items for better mobile display */
             align-items: center;
             flex-wrap: wrap;
+            gap: 15px; /* Add some space between items */
         }
         .single-line-results p {
-            margin: 5px;
-            font-size: 0.8em;
+            margin: 0; /* Remove default paragraph margin */
+            font-size: 1em;
+            white-space: nowrap; /* Prevent wrapping for compact display */
         }
         .profit-info.negative {
             color: #dc3545;
@@ -110,6 +114,29 @@
             font-weight: normal;
             margin-right: 5px;
         }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 600px) {
+            .input-group label, .input-group input[type="number"] {
+                flex-basis: 100%; /* Stack label and input on very small screens */
+                margin-right: 0;
+            }
+            .input-group input[type="number"] {
+                margin-top: 5px; /* Add some space between stacked label and input */
+                text-align: left; /* Align left when stacked */
+            }
+            .single-line-results {
+                flex-direction: column; /* Stack results vertically on small screens */
+                align-items: center;
+                gap: 5px;
+            }
+            .results .price-display {
+                font-size: 1.8em; /* Slightly smaller font for sticky header on mobile */
+            }
+            .results-info {
+                margin-bottom: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -122,7 +149,6 @@
         </div>
     </div>
     <div class="single-line-results">
-        <p>Pembulatan: <span id="pembulatanHargaJual">Rp 0</span></p>
         <p>Markup HPP: <span id="minimalMarkup">0%</span></p>
         <p>Profit: <span id="targetProfitInfo">Rp 0 (0%)</span></p>
     </div>
@@ -181,7 +207,7 @@
             <h2></h2>
             <p class="profit-kompetitor-display profit-info">
                 <span class="label">Profit:</span>
-                <span id="profitKompetitorInfo"> Rp 0 (0%)</span>
+                <span id="profitKompetitorInfo">Rp 0 (0%)</span>
             </p>
         </div>
     </div>
@@ -200,7 +226,7 @@
     const affiliateInput = document.getElementById('affiliate');
     const adsInput = document.getElementById('ads');
     const hargaJualDisplay = document.getElementById('hargaJualDisplay');
-    const pembulatanHargaJualDisplay = document.getElementById('pembulatanHargaJual');
+    /* const pembulatanHargaJualDisplay = document.getElementById('pembulatanHargaJual'); */ // Removed
     const minimalMarkupDisplay = document.getElementById('minimalMarkup');
     const targetProfitInfoDisplay = document.getElementById('targetProfitInfo');
     const customHargaInput = document.getElementById('customHarga');
@@ -228,7 +254,7 @@
         if (isNaN(hpp) || isNaN(flat) || isNaN(totalCostPercentage)) {
             const warningText = '⚠️ Belum Lengkap';
             hargaJualDisplay.textContent = warningText;
-            pembulatanHargaJualDisplay.textContent = warningText;
+            /* pembulatanHargaJualDisplay.textContent = warningText; */ // Removed
             minimalMarkupDisplay.textContent = warningText;
             targetProfitInfoDisplay.textContent = warningText;
             return;
@@ -238,7 +264,7 @@
         if (denominator <= 0) {
             const warningText = '⚠️ Total biaya >= 100%';
             hargaJualDisplay.textContent = warningText;
-            pembulatanHargaJualDisplay.textContent = warningText;
+            /* pembulatanHargaJualDisplay.textContent = warningText; */ // Removed
             minimalMarkupDisplay.textContent = warningText;
             targetProfitInfoDisplay.textContent = warningText;
             return;
@@ -250,7 +276,7 @@
         const calculatedTargetProfitRp = hargaJual * targetProfitPercentage;
 
         hargaJualDisplay.textContent = formatRupiah(hargaJual);
-        pembulatanHargaJualDisplay.textContent = formatRupiah(pembulatan);
+        /* pembulatanHargaJualDisplay.textContent = formatRupiah(pembulatan); */ // Removed
         minimalMarkupDisplay.textContent = `${Math.round(minimalMarkup)}%`;
         targetProfitInfoDisplay.textContent = `${formatRupiah(calculatedTargetProfitRp)} (${Math.round(targetProfitPercentage * 100)}%)`;
 
