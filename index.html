@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Harga Jual TikTok</title>
+    <title>Kalkulator Harga TikTok</title>
     <style>
         body {
             font-family: sans-serif;
@@ -81,10 +81,10 @@
 <body>
 
 <div class="container">
-    <h1>Kalkulator Harga Jual TikTok</h1>
+    <h1>Kalkulator Harga TikTok</h1>
 
     <div class="input-group">
-        <label for="hpp">HPP (Harga Pokok Penjualan) (Rp)</label>
+        <label for="hpp">Harga Pokok / HPP (Rp)</label>
         <input type="number" id="hpp" value="40000" onfocus="this.select()">
     </div>
 
@@ -121,25 +121,25 @@
     <hr>
 
     <div class="results">
-        <h2>Harga Jual</h2>
+        <h2>Harga Jual :</h2>
         <div class="price-display" id="hargaJualDisplay">Rp 0</div>
         
-        <p class="rounded-price">Pembulatan Harga Jual: <span id="pembulatanHargaJual">Rp 0</span></p>
-        <p class="markup">Minimal Markup: <span id="minimalMarkup">0%</span></p>
+        <p class="rounded-price">Pembulatan: <span id="pembulatanHargaJual">Rp 0</span></p>
+        <p class="markup">Markup HPP: <span id="minimalMarkup">0%</span></p>
         <p class="profit-info">Profit: <span id="targetProfitInfo">Rp 0 (0%)</span></p>
     </div>
 
     <hr>
 
-    <h2>Cek Profit dengan Harga Kompetitor</h2>
+    <h2>Cek Harga Kompetitor</h2>
     <div class="input-group">
-        <label for="customHarga">Harga Jual Kompetitor (Rp)</label>
+        <label for="customHarga">Harga Jual (Rp)</label>
         <input type="number" id="customHarga" placeholder="Masukkan harga jual..." onfocus="this.select()">
     </div>
 
     <div class="results">
-        <h2>Informasi Profit</h2>
-        <p class="profit-info">Profit: <span id="profitKompetitorInfo">Rp 0 (0%)</span></p>
+        <h2>Profit</h2>
+        <p class="profit-info"><span id="profitKompetitorInfo">Rp 0 (0%)</span></p>
     </div>
 
 </div>
@@ -167,7 +167,8 @@
         if (isNaN(number) || number === null) {
             return '⚠️ Belum Lengkap';
         }
-        return 'Rp ' + Math.round(number).toLocaleString('id-ID');
+        const formattedNumber = parseInt(Math.round(number));
+        return 'Rp ' + formattedNumber.toLocaleString('id-ID');
     }
 
     function calculateSellingPrice() {
@@ -187,7 +188,6 @@
             pembulatanHargaJualDisplay.textContent = warningText;
             minimalMarkupDisplay.textContent = warningText;
             targetProfitInfoDisplay.textContent = warningText;
-            profitKompetitorInfoDisplay.textContent = warningText;
             return;
         }
 
@@ -198,7 +198,6 @@
             pembulatanHargaJualDisplay.textContent = warningText;
             minimalMarkupDisplay.textContent = warningText;
             targetProfitInfoDisplay.textContent = warningText;
-            profitKompetitorInfoDisplay.textContent = warningText;
             return;
         }
 
@@ -212,7 +211,12 @@
         minimalMarkupDisplay.textContent = `${Math.round(minimalMarkup)}%`;
         targetProfitInfoDisplay.textContent = `${formatRupiah(calculatedTargetProfitRp)} (${Math.round(targetProfitPercentage * 100)}%)`;
 
-        customHargaInput.value = Math.round(hargaJual);
+        // Memastikan harga kompetitor otomatis terisi hanya jika belum ada input manual
+        if (document.activeElement !== customHargaInput) {
+            customHargaInput.value = pembulatan;
+        }
+
+        // Memastikan profit kompetitor diupdate berdasarkan nilai saat ini
         checkCustomPrice();
     }
 
@@ -248,13 +252,14 @@
         }
     }
 
-    const inputs = document.querySelectorAll('input[type="number"]');
+    const inputs = document.querySelectorAll('#hpp, #profit, #operational, #admin, #flat, #affiliate, #ads');
     inputs.forEach(input => {
         input.addEventListener('input', () => {
             calculateSellingPrice();
-            checkCustomPrice();
         });
     });
+
+    customHargaInput.addEventListener('input', checkCustomPrice);
 
     document.addEventListener('DOMContentLoaded', () => {
         calculateSellingPrice();
