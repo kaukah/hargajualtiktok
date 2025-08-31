@@ -124,13 +124,13 @@
 
         /* Sizing and styling input fields */
         .input-group input[type="number"] {
-            width: 40%; /* Reduced width */
+            width: 40%;
             padding: 6px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             cursor: pointer;
-            font-size: 1.2em; /* Increased font size */
+            font-size: 1.2em;
             font-weight: bold;
             text-align: right;
         }
@@ -146,7 +146,7 @@
         }
 
         .input-detail {
-            font-size: 0.8em; /* Reduced font size */
+            font-size: 0.8em;
             color: #666;
             text-align: right;
             width: 50%;
@@ -171,20 +171,17 @@
             font-size: 1.2em;
             font-weight: bold;
             text-align: right;
-
-
         }
 
         .results-static {
             margin-top: 0;
-            
         }
 
         .profit-kompetitor-display {
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            font-size: 0.8em; /* Reduced font size */
+            font-size: 0.8em;
             margin-top: 5px;
         }
         .profit-kompetitor-display .label {
@@ -375,7 +372,7 @@
         }
 
         const hargaJual = (hpp + flat) / denominator;
-        const pembulatan = Math.ceil(hargaJual / 1000) * 1000;
+        const pembulatan = Math.ceil(hargaJual / 100) * 100; // Pembulatan ke kelipatan 100
         const minimalMarkup = ((pembulatan / hpp) - 1) * 100;
         const calculatedTargetProfitRp = pembulatan * targetProfitPercentage;
 
