@@ -11,28 +11,109 @@
             background-color: #f4f4f4;
             color: #333;
         }
+
+        /* Styles for the new compact header */
+        .top-header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 5px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-header h1 {
+            margin: 0;
+            font-size: 1.1em;
+            text-align: left;
+        }
+        .reset-button {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            transition: background-color 0.3s;
+        }
+        .reset-button:hover {
+            background-color: #444;
+        }
+        
+        .results {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: #e9ecef;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .results-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 0;
+        }
+        .price-display {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #28a745;
+            margin-left: 5px;
+        }
+        .price-display-label {
+            font-size: 0.9em;
+            color: #555;
+            font-weight: normal;
+        }
+        .single-line-results {
+            margin: 5px 0 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .single-line-results p {
+            margin: 0;
+            font-size: 0.8em;
+            white-space: nowrap;
+        }
+        
         .container {
-            padding: 20px;
+            padding: 10px;
             background: #fff;
         }
-        .header {
-            text-align: center;
-            padding-top: 20px;
-        }
-        h1, h2 {
+        
+        h2 {
             text-align: center;
             color: #1a1a1a;
+            font-size: 1em;
+            margin: 15px 0 10px;
         }
+
+        .section-header {
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        
         .input-group {
             display: flex;
             flex-direction: column;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             align-items: flex-start;
         }
         .input-group label {
             font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 1.1em;
+            margin-bottom: 3px;
+            font-size: 0.8em;
         }
         .input-group-content {
             display: flex;
@@ -40,122 +121,100 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        /* Sizing and styling input fields */
         .input-group input[type="number"] {
-            width: 50%;
-            padding: 10px;
+            width: 40%; /* Reduced width */
+            padding: 6px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             cursor: pointer;
-            font-size: 1.2em;
+            font-size: 1.2em; /* Increased font size */
             font-weight: bold;
             text-align: right;
         }
+
+        /* Hiding the spinner arrows */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
         .input-detail {
-            font-size: 0.9em;
+            font-size: 0.8em; /* Reduced font size */
             color: #666;
+            text-align: right;
+            width: 50%;
+            padding-right: 5px;
         }
-        .results {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: #e9ecef;
-            padding: 10px 20px;
-            border-bottom: 1px solid #ddd;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .results-info {
+
+        /* Cek Profit Kompetitor section */
+        .custom-input-group {
             display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
         }
-        .price-display {
-            font-size: 2em;
+        .custom-input-group label {
             font-weight: bold;
-            color: #28a745;
+            font-size: 0.8em;
+            margin-right: 10px;
         }
-        .price-display-label {
-            display: block;
-            font-size: 0.7em;
-            color: #555;
-            font-weight: normal;
-        }
-        .single-line-results {
-            margin: 10px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .single-line-results p {
-            margin: 0;
-            font-size: 1em;
-            white-space: nowrap;
-        }
-        .profit-info.negative {
-            color: #dc3545;
-            font-weight: bold;
-        }
-        .warning {
-            color: #ffc107;
-            font-weight: bold;
-        }
-        .content {
-            padding: 20px;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #777;
-            font-size: 0.9em;
-        }
-        .profit-kompetitor-display {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .custom-input-group input[type="number"] {
+            width: 40%;
+            padding: 6px;
             font-size: 1.2em;
             font-weight: bold;
+            text-align: right;
+
+
+        }
+
+        .results-static {
+            margin-top: 0;
+            
+        }
+
+        .profit-kompetitor-display {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 0.8em; /* Reduced font size */
+            margin-top: 5px;
         }
         .profit-kompetitor-display .label {
             font-weight: normal;
             margin-right: 5px;
         }
-        /* Mobile-first approach: adjust for screens wider than 600px for desktop view */
-        @media (min-width: 601px) {
-            .input-group {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .input-group label {
-                flex-basis: 30%;
-                margin-bottom: 0;
-            }
-            .input-group-content {
-                flex-basis: 60%;
-                justify-content: flex-end;
-            }
-            .input-group input[type="number"] {
-                width: auto;
-                min-width: 150px;
-            }
-            .input-group .input-detail {
-                margin-right: 20px;
-            }
+        .profit-info.negative {
+            color: #dc3545;
+            font-weight: bold;
         }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            color: #777;
+            font-size: 0.7em;
+        }
+        
     </style>
 </head>
 <body>
 
+<div class="top-header">
+    <h1>Kalkulator TikTok</h1>
+    <button class="reset-button" id="resetButton">RESET</button>
+</div>
+
 <div class="results">
     <div class="results-info">
-        <div>
-            <span class="price-display-label">Harga Jual:</span>
-            <span class="price-display" id="hargaJualDisplay">Rp 0</span>
-        </div>
+        <span class="price-display-label">Harga Jual:</span>
+        <span class="price-display" id="hargaJualDisplay">Rp 0</span>
     </div>
     <div class="single-line-results">
         <p>Markup HPP: <span id="minimalMarkup">0%</span></p>
@@ -164,14 +223,11 @@
 </div>
 
 <div class="container">
-    <div class="header">
-        <h1>Kalkulator  TikTok</h1>
-    </div>
-
     <div class="content">
         <div class="input-group">
-            <label for="hpp">Harga Pokok / HPP (Rp)</label>
+            <label for="hpp">Harga HPP (Rp)</label>
             <div class="input-group-content">
+                <span class="input-detail" id="hppDetail"></span>
                 <input type="number" id="hpp" value="40000" onfocus="this.select()">
             </div>
         </div>
@@ -185,7 +241,7 @@
         </div>
         
         <div class="input-group">
-            <label for="operational">Biaya Operasional (%)</label>
+            <label for="operational">Operasional (%)</label>
             <div class="input-group-content">
                 <span class="input-detail" id="operationalDetail"></span>
                 <input type="number" id="operational" value="2" onfocus="this.select()">
@@ -203,12 +259,13 @@
         <div class="input-group">
             <label for="flat">Biaya Flat (Rp)</label>
             <div class="input-group-content">
+                <span class="input-detail" id="flatDetail"></span>
                 <input type="number" id="flat" value="1250" onfocus="this.select()">
             </div>
         </div>
 
         <div class="input-group">
-            <label for="affiliate">Komisi Affiliate (%)</label>
+            <label for="affiliate">Komisi Aff (%)</label>
             <div class="input-group-content">
                 <span class="input-detail" id="affiliateDetail"></span>
                 <input type="number" id="affiliate" value="10" onfocus="this.select()">
@@ -225,16 +282,14 @@
 
         <hr>
 
-        <h2>Cek Profit Kompetitor</h2>
-        <div class="input-group">
+        <div class="section-header">Cek Profit Kompetitor</div>
+        
+        <div class="custom-input-group">
             <label for="customHarga">Harga Jual (Rp)</label>
-            <div class="input-group-content">
-                <input type="number" id="customHarga" placeholder="Masukkan harga jual..." onfocus="this.select()">
-            </div>
+            <input type="number" id="customHarga" placeholder="Masukkan harga..." onfocus="this.select()">
         </div>
-
+        
         <div class="results-static">
-            <h2></h2>
             <p class="profit-kompetitor-display profit-info">
                 <span class="label">Profit:</span>
                 <span id="profitKompetitorInfo">Rp 0 (0%)</span>
@@ -263,15 +318,19 @@
     const customHargaInput = document.getElementById('customHarga');
     const profitKompetitorInfoDisplay = document.getElementById('profitKompetitorInfo');
 
+    const hppDetail = document.getElementById('hppDetail');
     const profitDetail = document.getElementById('profitDetail');
     const operationalDetail = document.getElementById('operationalDetail');
     const adminDetail = document.getElementById('adminDetail');
+    const flatDetail = document.getElementById('flatDetail');
     const affiliateDetail = document.getElementById('affiliateDetail');
     const adsDetail = document.getElementById('adsDetail');
 
+    const resetButton = document.getElementById('resetButton');
+
     function formatRupiah(number) {
         if (isNaN(number) || number === null) {
-            return '⚠️ Belum Lengkap';
+            return '';
         }
         const formattedNumber = parseInt(Math.round(number));
         return 'Rp ' + formattedNumber.toLocaleString('id-ID');
@@ -291,8 +350,18 @@
         if (isNaN(hpp) || isNaN(flat) || isNaN(totalCostPercentage)) {
             const warningText = '⚠️ Belum Lengkap';
             hargaJualDisplay.textContent = warningText;
-            minimalMarkupDisplay.textContent = warningText;
-            targetProfitInfoDisplay.textContent = warningText;
+            minimalMarkupDisplay.textContent = '0%';
+            targetProfitInfoDisplay.textContent = 'Rp 0 (0%)';
+            
+            hppDetail.textContent = '';
+            flatDetail.textContent = '';
+            profitDetail.textContent = '';
+            operationalDetail.textContent = '';
+            adminDetail.textContent = '';
+            affiliateDetail.textContent = '';
+            adsDetail.textContent = '';
+            
+            checkCustomPrice();
             return;
         }
 
@@ -300,20 +369,22 @@
         if (denominator <= 0) {
             const warningText = '⚠️ Total biaya >= 100%';
             hargaJualDisplay.textContent = warningText;
-            minimalMarkupDisplay.textContent = warningText;
-            targetProfitInfoDisplay.textContent = warningText;
+            minimalMarkupDisplay.textContent = '0%';
+            targetProfitInfoDisplay.textContent = 'Rp 0 (0%)';
             return;
         }
 
         const hargaJual = (hpp + flat) / denominator;
         const pembulatan = Math.ceil(hargaJual / 1000) * 1000;
         const minimalMarkup = ((pembulatan / hpp) - 1) * 100;
-        const calculatedTargetProfitRp = hargaJual * targetProfitPercentage;
+        const calculatedTargetProfitRp = pembulatan * targetProfitPercentage;
 
         hargaJualDisplay.textContent = formatRupiah(pembulatan);
         minimalMarkupDisplay.textContent = `${Math.round(minimalMarkup)}%`;
         targetProfitInfoDisplay.textContent = `${formatRupiah(calculatedTargetProfitRp)} (${Math.round(targetProfitPercentage * 100)}%)`;
 
+        hppDetail.textContent = formatRupiah(hpp);
+        flatDetail.textContent = formatRupiah(flat);
         profitDetail.textContent = formatRupiah(pembulatan * targetProfitPercentage);
         operationalDetail.textContent = formatRupiah(pembulatan * operationalPercentage);
         adminDetail.textContent = formatRupiah(pembulatan * adminPercentage);
@@ -359,6 +430,18 @@
         }
     }
 
+    function resetCalculator() {
+        hppInput.value = 0;
+        profitInput.value = 0;
+        operationalInput.value = 0;
+        adminInput.value = 0;
+        flatInput.value = 0;
+        affiliateInput.value = 0;
+        adsInput.value = 0;
+        customHargaInput.value = '';
+        calculateSellingPrice();
+    }
+
     const inputs = document.querySelectorAll('input[type="number"]');
     inputs.forEach(input => {
         input.addEventListener('input', () => {
@@ -366,6 +449,8 @@
             checkCustomPrice();
         });
     });
+
+    resetButton.addEventListener('click', resetCalculator);
 
     document.addEventListener('DOMContentLoaded', () => {
         calculateSellingPrice();
