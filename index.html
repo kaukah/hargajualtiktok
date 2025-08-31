@@ -204,25 +204,25 @@
 <body>
 
 <div class="top-header">
-    <h1>Kalkulator TikTok</h1>
-    <button class="reset-button" id="resetButton">RESET</button>
+    <h1>🔢 Kalkulator TikTok</h1>
+    <button class="reset-button" id="resetButton">❌CLEAR</button>
 </div>
 
 <div class="results">
     <div class="results-info">
-        <span class="price-display-label">Harga Jual:</span>
+        <span class="price-display">Harga Jual</span>
         <span class="price-display" id="hargaJualDisplay">Rp 0</span>
     </div>
     <div class="single-line-results">
-        <p>Markup HPP: <span id="minimalMarkup">0%</span></p>
-        <p>Profit: <span id="targetProfitInfo">Rp 0 (0%)</span></p>
+        <p>🚀 Markup HPP <b><span id="minimalMarkup">0%</b></span></p>
+        <p>💰 Profitnya <b><span id="targetProfitInfo">Rp 0 (0%)</span></b></p>
     </div>
 </div>
 
 <div class="container">
     <div class="content">
         <div class="input-group">
-            <label for="hpp">Harga HPP (Rp)</label>
+            <label for="hpp">⚫ Harga HPP (Rp)</label>
             <div class="input-group-content">
                 <span class="input-detail" id="hppDetail"></span>
                 <input type="number" id="hpp" value="40000" onfocus="this.select()">
@@ -230,7 +230,7 @@
         </div>
 
         <div class="input-group">
-            <label for="profit">Target Profit (%)</label>
+            <label for="profit">🟢 Target Profit (%)</label>
             <div class="input-group-content">
                 <span class="input-detail" id="profitDetail"></span>
                 <input type="number" id="profit" value="10" onfocus="this.select()">
@@ -238,15 +238,7 @@
         </div>
         
         <div class="input-group">
-            <label for="operational">Operasional (%)</label>
-            <div class="input-group-content">
-                <span class="input-detail" id="operationalDetail"></span>
-                <input type="number" id="operational" value="2" onfocus="this.select()">
-            </div>
-        </div>
-        
-        <div class="input-group">
-            <label for="admin">Biaya Admin (%)</label>
+            <label for="admin">🔴 Biaya Admin (%)</label>
             <div class="input-group-content">
                 <span class="input-detail" id="adminDetail"></span>
                 <input type="number" id="admin" value="17" onfocus="this.select()">
@@ -254,7 +246,7 @@
         </div>
 
         <div class="input-group">
-            <label for="flat">Biaya Flat (Rp)</label>
+            <label for="flat">🔴 Biaya Flat (Rp)</label>
             <div class="input-group-content">
                 <span class="input-detail" id="flatDetail"></span>
                 <input type="number" id="flat" value="1250" onfocus="this.select()">
@@ -262,7 +254,7 @@
         </div>
 
         <div class="input-group">
-            <label for="affiliate">Komisi Aff (%)</label>
+            <label for="affiliate">🔴 Komisi Aff (%)</label>
             <div class="input-group-content">
                 <span class="input-detail" id="affiliateDetail"></span>
                 <input type="number" id="affiliate" value="10" onfocus="this.select()">
@@ -270,7 +262,15 @@
         </div>
 
         <div class="input-group">
-            <label for="ads">Iklan (%)</label>
+            <label for="operational">🟡 Operasional (%)</label>
+            <div class="input-group-content">
+                <span class="input-detail" id="operationalDetail"></span>
+                <input type="number" id="operational" value="2" onfocus="this.select()">
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label for="ads">🟡 Iklan (%)</label>
             <div class="input-group-content">
                 <span class="input-detail" id="adsDetail"></span>
                 <input type="number" id="ads" value="10" onfocus="this.select()">
@@ -279,7 +279,7 @@
 
         <hr>
 
-        <div class="section-header">Cek Profit Kompetitor</div>
+        <div class="section-header">🔍 Cek Profit Kompetitor</div>
         
         <div class="custom-input-group">
             <label for="customHarga">Harga Jual (Rp)</label>
